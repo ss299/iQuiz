@@ -9,6 +9,10 @@ import UIKit
 
 class NameSource: NSObject, UITableViewDataSource {
     
+    let names = ["Mathematics", "Marvel Super Heroes", "Science"]
+    
+    let subtitle = ["Calculus III basics", "Potion making class", "How to make fart smell nice"]
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return(names.count)
@@ -26,10 +30,6 @@ class NameSource: NSObject, UITableViewDataSource {
         
         return cell
     }
-    
-    let names = ["Mathematics", "Marvel Super Heroes", "Science"]
-    
-    let subtitle = ["Calculus III basics", "Potion making class", "How to make fart smell nice"]
     
 
     
