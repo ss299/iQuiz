@@ -7,11 +7,53 @@
 
 import UIKit
 
-class NameSource: NSObject, UITableViewDataSource {
+//class NameSource: NSObject, UITableViewDataSource{
+//    
+//    let names = ["Mathematics", "Marvel Super Heroes", "Science"]
+//    
+//    let subtitle = ["Calculus III basics", "Potion making class", "How to make fart smell nice"]
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        
+//        return(names.count)
+//        
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+////
+////        NSLog("tableView(_:numberofRowsInSection:)\(indexPath)")
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "basicStyle", for: indexPath)
+//        
+//        cell.textLabel?.text = names[indexPath.row]
+//        
+//        cell.detailTextLabel?.text = subtitle[indexPath.row]
+//        
+//        return cell
+//    }
+//    
+//
+//    
+//
+//}
+
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let names = ["Mathematics", "Marvel Super Heroes", "Science"]
     
     let subtitle = ["Calculus III basics", "Potion making class", "How to make fart smell nice"]
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.tableFooterView = UIView()
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -20,8 +62,7 @@ class NameSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        NSLog("tableView(_:numberofRowsInSection:)\(indexPath)")
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicStyle", for: indexPath)
         
         cell.textLabel?.text = names[indexPath.row]
@@ -31,26 +72,6 @@ class NameSource: NSObject, UITableViewDataSource {
         return cell
     }
     
-
-    
-    
-    
-
-}
-
-class ViewController: UIViewController {
-    let data = NameSource()
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        tableView.dataSource = data
-        tableView.tableFooterView = UIView()
-    }
-
-
     @IBAction func alert(_ sender: Any) {
         let stop = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
         
@@ -58,5 +79,17 @@ class ViewController: UIViewController {
         
         self.present(stop, animated: true)
     }
+    
+   
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        performSegue(withIdentifier: "quizSelector", sender: cell)
+        }
+    
+    // This function is called before the segue
+    
+    
 }
 
