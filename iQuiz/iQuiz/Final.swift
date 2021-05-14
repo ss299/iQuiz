@@ -9,21 +9,28 @@ import UIKit
 
 class Final: UIViewController {
 
+    @IBOutlet weak var marks: UILabel!
+    @IBOutlet weak var compliment: UILabel!
+    var totalCorrect = 0
+    var questionArraySize = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if (totalCorrect == questionArraySize) {
+            compliment.text = "Go chill!"
+            marks.text = String(totalCorrect) + " / " + String(questionArraySize)
+        } else {
+            compliment.text = "Need work"
+            marks.text = String(totalCorrect) + " / " + String(questionArraySize)
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func backToHome(_ sender: Any) {
+        performSegue(withIdentifier: "finalToHome", sender: self)
     }
-    */
-
+    
+    
 }
