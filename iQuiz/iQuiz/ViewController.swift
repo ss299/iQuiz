@@ -55,15 +55,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var subtitle:[String] = []
     
-    var question = [[["What is 3 + 2?"], ["What is 6 X 2"]],[["When did Marvel Start"], ["Who is Iron Man?"]] , [["What is lighter than oxygen"], ["What does Na stand for?"]]]
+    //var question = [[["What is 3 + 2?"], ["What is 6 X 2"]],[["When did Marvel Start"], ["Who is Iron Man?"]] , [["What is lighter than oxygen"], ["What does Na stand for?"]]]
     
-    //var question: [[String]] = []
+    var question: [[[String]]] = []
+    var choices: [[[String]]] = []
+    var answer: [[[Int]]] = []
+   // var choices = [[["5", "55", "0", "3"], ["12", "61", "45", "34"]], [["1209", "1945", "1939", "2000"], ["Chris Hemsworth", "Saurav", "Zen", "Robert Downey Jr."]], [["Chlorine", "Hydrogen", "Helium", "Argon"], ["Pink Salt", "Sodium", "Magnesium", "Chevron"]]]
     
-    let choices = [[["5", "55", "0", "3"], ["12", "61", "45", "34"]], [["1209", "1945", "1939", "2000"], ["Chris Hemsworth", "Saurav", "Zen", "Robert Downey Jr."]], [["Chlorine", "Hydrogen", "Helium", "Argon"], ["Pink Salt", "Sodium", "Magnesium", "Chevron"]]]
+    //var answer = [[[0], [0]],[[2], [3]], [[2], [1]]]
     
-    let answer = [[[0], [0]],[[2], [3]], [[2], [1]]]
-    
-    var counter:Int = 0
+    var counter:Int = -1
     
     var chillin:String = "please change me"
     
@@ -100,21 +101,65 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     
                     for item in self.first{
                         
+                        var anotherArray: [[String]] = []
+                        
                         self.names.append(item["title"] as! String)
                         self.subtitle.append(item["desc"] as! String)
                         let questionsDict = item["questions"] as! [Dictionary<String, Any>]
-                        //print(questionsDict[0]["text"])
-                        //]\\\print("BREAK")
-                        var questions:[String] = []
-                        questions.append(questionsDict[0]["text"] as! String)
-                        self.question.append([questions])
-                        print(questions)
-                        //self.question.append()
+                        //print(question["text"])
+                        for questionTitle in questionsDict{
                         
+                            
+                            let printText = questionTitle["text"]!
+                            var dummyArray:[String] = []
+            
+                            dummyArray.append(printText as! String)
+                           // if(questionTitle)
+                            anotherArray.append(dummyArray)
+                            
+                        }
+                        self.question.append(anotherArray)
+                        anotherArray.removeAll()
+                        
+                        var answersArray: [[String]] = []
+                        for answerChoices in questionsDict{
+                        
+                            
+                            let printText = answerChoices["answers"]!
+                            answersArray.append(printText as! [String])
+                            
+                        }
+                        self.choices.append(answersArray)
+                        answersArray.removeAll()
+                        
+                        
+                        var actualAnswerArray: [[Int]] = []
+                        for answer in questionsDict{
+                        
+                            var answersArray: [Int] = []
 
+                            var printText = answer["answer"]!
+                            printText = Int(printText as! String)!
+                            printText = printText as! Int - 1
+                            print(printText)
+                            answersArray.append(printText as! Int)
+                            
+                            actualAnswerArray.append(answersArray)
+
+                        }
+                        self.answer.append(actualAnswerArray)
+                        answersArray.removeAll()
+                        
+                        
+                        
                         
                     }
-                    print(self.question)
+                    
+                    print(self.answer)
+                    
+                    
+
+                    //print(self.question)
                     
                     
                 } catch let jsonErr {
