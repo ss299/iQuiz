@@ -70,6 +70,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var newTry: [Questions] = []
     
+    var isInternet: Bool = false
+    
     //var tests = Questions.init(json: ["title": "1"])
     
     
@@ -155,7 +157,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         
                     }
                     
-                    print(self.answer)
+                    //print(self.answer)
                     
                     
 
@@ -196,13 +198,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 //print(cell.textLabel?.text)
                 
                 cell.detailTextLabel?.text = self.subtitle[indexPath.row]
-                
-            
-
-
-  
-
- 
 
         return cell
 
@@ -218,12 +213,39 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     
     @IBAction func alert(_ sender: Any) {
-        let stop = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Settings", message: "", preferredStyle: .alert)
         
-        stop.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addTextField { (textField) in
+            textField.text = "Add URL"
+        }
+
+        alert.addAction(UIAlertAction(title: "Check Now", style: .default, handler: { (action) in
+            let textInput = alert.textFields![0]
+            let urlInput = textInput.text!
+            //print(urlInput)
+
+            var isNetwork = false
+            self.isInternet = self.verifyUrl(urlString: urlInput)
+            //print(isNetwork)
+//            DispatchQueue.main.async {
+//                hasNetwork = self.checkNetwork(text: textField.text)
+//            }
+            
+        }))
         
-        self.present(stop, animated: true)
+        print(self.isInternet)
+      
+        self.present(alert,animated: true)
     }
+    
+    func verifyUrl (urlString: String?) -> Bool {
+       if let urlString = urlString {
+           if let url = NSURL(string: urlString) {
+               return UIApplication.shared.canOpenURL(url as URL)
+           }
+       }
+       return false
+   }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "quizSelector" {
